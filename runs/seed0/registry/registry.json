@@ -1,0 +1,100 @@
+{
+  "current": "v002",
+  "versions": {
+    "v001": {
+      "path": "runs\\seed0\\registry\\checkpoints\\resnet18_braintumor_v001.pth",
+      "sha256": "80b3b0fcdd30630969c9daf8acbeda3ea126443b9f7ba6e7d02b32224403491e",
+      "parent": null,
+      "kind": "baseline",
+      "status": "promoted",
+      "created": "2026-10-28T11:56:56",
+      "meta": {
+        "best_val_acc": 94.77124183006536,
+        "seed": 0
+      }
+    },
+    "v002": {
+      "path": "runs\\seed0\\registry\\checkpoints\\resnet18_braintumor_v002.pth",
+      "sha256": "7243c89faeff3f062301dcfdc1ae0c4a58a21002b399c7488002715e06e905e9",
+      "parent": "v001",
+      "kind": "agent_candidate",
+      "status": "promoted",
+      "created": "2026-10-28T12:12:37",
+      "meta": {
+        "cycle": 1,
+        "recipe": {
+          "id": "A",
+          "beta": 6.0
+        },
+        "epochs": 20,
+        "eps_255": 2
+      }
+    },
+    "v003": {
+      "path": "runs\\seed0\\registry\\checkpoints\\resnet18_braintumor_v003.pth",
+      "sha256": "724cc815be6d432249c818311f1695c7fa49094f4a2f2a5c377956551f957b89",
+      "parent": "v001",
+      "kind": "agent_candidate",
+      "status": "not_selected",
+      "created": "2026-10-28T12:25:16",
+      "meta": {
+        "cycle": 1,
+        "recipe": {
+          "id": "B",
+          "beta": 3.0
+        },
+        "epochs": 20,
+        "eps_255": 2
+      }
+    },
+    "v004": {
+      "path": "runs\\seed0\\registry\\checkpoints\\resnet18_braintumor_v004.pth",
+      "sha256": "b8eda91005123991df3effd0acbab0800360de7c1a635f71b904139804a1dab9",
+      "parent": "v001",
+      "kind": "agent_candidate",
+      "status": "not_selected",
+      "created": "2026-10-28T12:37:54",
+      "meta": {
+        "cycle": 1,
+        "recipe": {
+          "id": "C",
+          "beta": 1.0
+        },
+        "epochs": 20,
+        "eps_255": 2
+      }
+    },
+    "v005": {
+      "path": "runs\\seed0\\registry\\checkpoints\\resnet18_braintumor_v005.pth",
+      "sha256": "450ea9475fb9f1d9c17b57cd2e7a98803167b2135f88ac2298c5e5f0d4210cdf",
+      "parent": "v001",
+      "kind": "direct_trades",
+      "status": "control",
+      "created": "2026-10-28T12:50:32",
+      "meta": {
+        "epochs": 20,
+        "recipe": {
+          "id": "A",
+          "beta": 6.0
+        },
+        "method": "trades"
+      }
+    },
+    "v006": {
+      "path": "runs\\seed0\\registry\\checkpoints\\resnet18_braintumor_v006.pth",
+      "sha256": "e3307dc0453cf08e1a3351f81a708f529a5b75cb897da992bf3f707183104c0b",
+      "parent": "v001",
+      "kind": "madry_at",
+      "status": "control",
+      "created": "2026-10-28T13:13:10",
+      "meta": {
+        "epochs": 20,
+        "recipe": {
+          "id": "A",
+          "beta": 6.0
+        },
+        "method": "madry"
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+data: {max_per_split: 48}
+model: {pretrained: false}
+baseline: {epochs: 2}
+probes_monitor:
+  pgd: {steps: 3}
+  bim: {steps: 3}
+  cw: {steps: 5}
+  square: {n_queries: 10}
+probes_final:
+  pgd: {steps: 3}
+  bim: {steps: 3}
+  cw: {steps: 5, binary_steps: 1}
+  square: {n_queries: 20}
+  apgd: {steps: 3}
+  pgd_rs: {steps: 3, restarts: 2}
+trades: {steps: 2, epochs_per_cycle: 1, warmup_epochs: 1, n_candidates: 2}
+agent: {max_cycles: 2}
+eval: {bootstrap_samples: 100}
+deploy: {request_rate_hz: 50}

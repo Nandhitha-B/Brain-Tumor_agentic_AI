@@ -1,0 +1,67 @@
+paths: {raw_dir: data/raw, processed_dir: data/processed, runs_dir: runs}
+
+data:
+  image_size: 224
+  split_seed: 42
+  n_folds: 10
+  test_folds: 2
+  val_folds: 1
+  monitor_folds: 1
+  pid_regex: null
+  max_per_split: null
+
+classes: [meningioma, glioma, pituitary]
+
+model: {arch: resnet18, pretrained: true, mean: 0.5, std: 0.5}
+
+baseline: {epochs: 30, batch_size: 32, lr: 0.01, momentum: 0.9, weight_decay: 0.0001, augment: true}
+
+attack: {eps_255: 2}              # MUST equal trades.eps_255
+
+probes_monitor:
+  pgd: {steps: 10, alpha_255: 0.5, random_start: true}
+  bim: {steps: 10, alpha_255: 0.5}
+  cw:  {l2_eps: 1.0, steps: 50, lr: 0.01, c_init: 1.0, binary_steps: 1, kappa: 0.0}
+  square: {n_queries: 300, p_init: 0.05}
+
+probes_final:
+  pgd: {steps: 20, alpha_255: 0.5, random_start: true}
+  bim: {steps: 20, alpha_255: 0.5}
+  cw:  {l2_eps: 1.0, steps: 100, lr: 0.01, c_init: 1.0, binary_steps: 3, kappa: 0.0}
+  square: {n_queries: 1000, p_init: 0.05}
+  apgd: {steps: 50}
+  pgd_rs: {steps: 50, alpha_255: 0.5, restarts: 5}
+
+trades:
+  eps_255: 2
+  alpha_255: 0.5
+  steps: 10
+  beta: 6.0
+  lr: 0.0002
+  epochs_per_cycle: 20
+  warmup_epochs: 5
+  batch_size: 32
+  augment: true
+  n_candidates: 3                  # recipes the agent trains and compares per cycle
+  recipes:                         # the agent's hyper-parameter search space
+    - {id: A, beta: 6.0}
+    - {id: B, beta: 3.0}
+    - {id: C, beta: 1.0}
+
+agent:
+  tau_pp: 15.0
+  tau_mode: adaptive               # adaptive: trigger only if dR - z*SE > tau ; fixed: dR > tau
+  tau_z: 1.64
+  max_cycles: 3
+  max_clean_drop_pp: 5.0
+  min_gain_pp: 2.0                 # candidate must raise worst-case accuracy by this much
+  max_consecutive_rejections: 2
+  monitor_batch_size: 64
+  cheap_probes: [fgsm, pgd]        # run first; if they already prove a violation, stop probing
+  full_probes: [fgsm, pgd, bim, cw]
+  masking_probe: null            # gradient-free sanity check against gradient masking
+  masking_tol_pp: 15.0
+
+eval: {batch_size: 64, bootstrap_samples: 2000, stress_eps_255: 4, sweep_eps_255: [1, 2, 4, 8, 16]}
+inference: {smoothing: false}
+deploy: {reload_interval_s: 5, request_rate_hz: 20, inference_device: cpu}

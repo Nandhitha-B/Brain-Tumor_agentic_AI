@@ -1,0 +1,7 @@
+{
+  "n": 613,
+  "A_clean": 96.08482871125612,
+  "A_worst_case": 0.0,
+  "worst_attack": "pgd",
+  "delta_R_pp": 96.08482871125612
+}
